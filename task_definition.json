@@ -1,13 +1,27 @@
 [
     {
-        "name": "openapi-ecs-container",
+        "name": "jenkins-ecs-container",
         "image": "815448023316.dkr.ecr.us-east-1.amazonaws.com/jenkins:2-265-01",
         "cpu": 10,
         "memory": 512,
         "links": [],
+        "environmentFiles": [
+            {
+                "value": "arn:aws:s3:::ecs-container-env-files/jenkins/runtime.env",
+                "type": "s3"
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "jenkins-log-group",
+                "awslogs-region": "us-east-1",
+                "awslogs-stream-prefix": "ecs"
+            }
+        },
         "portMappings": [
             {
-                "hostPort": 8080,
+                "hostPort": 80,
                 "containerPort": 8080,
                 "protocol": "tcp"
             }
